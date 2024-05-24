@@ -1,5 +1,5 @@
 import { User } from "src/users/user.entity";
-import { Column as ColumnOrm, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column as ColumnOrm, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: 'columns'})
 export class Column {
@@ -10,9 +10,10 @@ export class Column {
     name: string;
 
     @ColumnOrm()
-    user_id: number;
+    userId: number
 
     @ManyToOne(type => User, user => user.columns)
+    @JoinColumn()
     user: User
 
 }

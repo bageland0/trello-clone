@@ -4,6 +4,8 @@ import { AuthService } from './auth.service';
 import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { UsersService } from 'src/users/users.service';
+import { OwnershipInterceptor } from './ownership.interceptor';
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService],
-  exports: [AuthService],
+  providers: [AuthService, OwnershipInterceptor],
+  exports: [AuthService, OwnershipInterceptor],
 })
 export class AuthModule {}

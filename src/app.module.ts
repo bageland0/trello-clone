@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ColumnsModule } from './columns/columns.module';
 import { Column } from './columns/column.entity';
+import { LegacyOracleNamingStrategy } from 'typeorm';
 
 @Module({
   imports: [
