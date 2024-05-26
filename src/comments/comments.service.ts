@@ -1,39 +1,40 @@
-import { Inject, Injectable, NotFoundException, Request } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
-import { Column } from './column.entity';
 import { CreateDto } from './dto/create.dto';
 import { UpdateDto } from './dto/update.dto';
 import { plainToClass } from 'class-transformer';
-import { ColumnRepository } from './column.repository';
 import { OwnershipInterface } from 'src/auth/ownership.interface';
+import { Column } from 'src/columns/column.entity';
+import { CommentRepository } from './comment.repository';
+import { Comment } from './comment.entity';
 
 @Injectable()
-export class ColumnsService {
+export class CommentsService {
   constructor(
-    @Inject(ColumnRepository)
-    private repository: Repository<Column> & OwnershipInterface,
+    @Inject(CommentRepository)
+    private repository: Repository<Comment> & OwnershipInterface,
   ) {}
 
-  async create(dto: CreateDto, request: Request): Promise<Column> {
+  async create(dto: CreateDto): Promise<Comment> {
     console.log(dto);
 
-    const model = new Column();
-    model.name = dto.name;
-    model.user = request['user'];
+    const model = new Comment();
+    model.text = dto.text;
+    model.cardId = dto.cardId;
 
     return await this.repository.save(model);
   }
 
-  async findAll(userId: number): Promise<Column[]> {
+  async findAll(userId: number): Promise<Comment[]> {
     return await this.repository.findAllByUser(userId);
   }
 
-  async findOne(id: number): Promise<Column> {
+  async findOne(id: number): Promise<Comment> {
     return await this.repository.findOneBy({ id });
   }
 
-  async update(id: number, dto: UpdateDto): Promise<Column> {
+  async update(id: number, dto: UpdateDto): Promise<Comment> {
     const model = await this.repository.findOneBy({ id });
     if (!model) {
       throw new NotFoundException();

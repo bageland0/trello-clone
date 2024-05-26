@@ -1,20 +1,20 @@
 import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Patch, Post, Req, Request, UseGuards, UseInterceptors } from '@nestjs/common';
-import { ColumnsService } from './columns.service';
+import { CardsService } from './cards.service';
 import { CreateDto } from './dto/create.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { Column } from './column.entity';
+import { Card } from './card.entity';
 import { UpdateDto } from './dto/update.dto';
 import { OwnershipGuard } from './ownership.guard';
 
 @UseGuards(AuthGuard, OwnershipGuard)
-@Controller('columns')
-export class ColumnsController {
-    constructor(private readonly service: ColumnsService) {}
+@Controller('cards')
+export class CardsController {
+    constructor(private readonly service: CardsService) {}
 
     @Post()
     @HttpCode(201)
-    async create(@Body() dto: CreateDto, @Request() request : Request) {
-        return await this.service.create(dto, request)
+    async create(@Body() dto: CreateDto) {
+        return await this.service.create(dto)
     }
 
     @Get()

@@ -8,7 +8,10 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ColumnsModule } from './columns/columns.module';
 import { Column } from './columns/column.entity';
-import { LegacyOracleNamingStrategy } from 'typeorm';
+import { Card } from './cards/card.entity';
+import { CardsModule } from './cards/cards.module';
+import { CommentsModule } from './comments/comments.module';
+import { Comment } from './comments/comment.entity';
 
 @Module({
   imports: [
@@ -22,12 +25,14 @@ import { LegacyOracleNamingStrategy } from 'typeorm';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE,
-      entities: [User, Column],
+      entities: [User, Column, Card, Comment],
       synchronize: true,
     }),
     UsersModule,
     AuthModule,
     ColumnsModule,
+    CardsModule,
+    CommentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

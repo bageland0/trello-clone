@@ -5,7 +5,7 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { UsersService } from 'src/users/users.service';
-import { OwnershipInterceptor } from './ownership.interceptor';
+import { AbstractOwnershipGuard } from './ownership.guard';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { OwnershipInterceptor } from './ownership.interceptor';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, OwnershipInterceptor],
-  exports: [AuthService, OwnershipInterceptor],
+  providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}
