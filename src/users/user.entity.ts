@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Column as ColumnEntity } from 'src/columns/column.entity';
 import {
-    Column,
+  Column,
   Entity,
   JoinColumn,
   OneToMany,

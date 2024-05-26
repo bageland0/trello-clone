@@ -9,5 +9,4 @@ export class AppService {
   getHello(): string {
     return 'API';
   }
-
 }

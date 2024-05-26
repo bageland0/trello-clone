@@ -31,7 +31,11 @@ export abstract class AbstractOwnershipGuard implements CanActivate {
       return true;
     }
 
-    if (request.method === 'GET' || request.method === 'PATCH' || request.method === "DELETE") {
+    if (
+      request.method === 'GET' ||
+      request.method === 'PATCH' ||
+      request.method === 'DELETE'
+    ) {
       const owner = await this.repository.getOwner(params.id);
 
       if (owner.id === user.id) {

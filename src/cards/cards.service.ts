@@ -18,7 +18,8 @@ export class CardsService {
 
   async create(dto: CardCreateDto): Promise<Card> {
     const model = new Card();
-    model.name = dto.name; model.columnId = dto.columnId;
+    model.name = dto.name;
+    model.columnId = dto.columnId;
 
     return await this.repository.save(model);
   }

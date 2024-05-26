@@ -9,7 +9,7 @@ export const CardRepository = (
   dataSource: DataSource,
 ): Repository<Card> & OwnershipInterface => {
   const repository = dataSource.getRepository(Card);
-  const columnRepository = dataSource.getRepository(Column); 
+  const columnRepository = dataSource.getRepository(Column);
   const extendedRepository = repository.extend({
     async getOwner(id: number): Promise<User> {
       const model = await this.findOne({

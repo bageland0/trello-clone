@@ -9,7 +9,8 @@ import { DataSource } from 'typeorm';
 
 @Module({
   controllers: [ColumnsController],
-  providers: [ColumnsService,
+  providers: [
+    ColumnsService,
     {
       provide: ColumnRepository,
       useFactory: (dataSource: DataSource) => ColumnRepository(dataSource),

@@ -24,7 +24,7 @@ export class Comment {
   cardId: number;
 
   @ApiProperty({ type: () => Card })
-  @ManyToOne((type) => Card, (card) => card.comments, { onDelete: "CASCADE"})
+  @ManyToOne((type) => Card, (card) => card.comments, { onDelete: 'CASCADE' })
   @JoinColumn()
   card: Card;
 

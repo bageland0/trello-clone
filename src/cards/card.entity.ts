@@ -12,7 +12,6 @@ import {
 
 @Entity({ name: 'cards' })
 export class Card {
-
   @ApiProperty()
   @PrimaryGeneratedColumn()
   id: number;
@@ -26,11 +25,15 @@ export class Card {
   columnId: number;
 
   @ApiProperty({ type: () => Comment })
-  @OneToMany(type => Comment, comment => comment.card, {onDelete: "CASCADE"})
+  @OneToMany((type) => Comment, (comment) => comment.card, {
+    onDelete: 'CASCADE',
+  })
   comments: Comment[];
 
   @ApiProperty({ type: () => Column })
-  @ManyToOne((type) => Column, (column) => column.cards, { onDelete: "CASCADE"})
+  @ManyToOne((type) => Column, (column) => column.cards, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   column: Column;
 }
