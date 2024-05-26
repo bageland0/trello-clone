@@ -5,10 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Card } from './card.entity';
 import { UsersModule } from 'src/users/users.module';
 import { CardRepository } from './card.repository';
-import { DataSource, Repository } from 'typeorm';
-import { OwnershipGuard } from './ownership.guard';
-import { AbstractOwnershipGuard } from 'src/auth/ownership.guard';
-
+import { DataSource } from 'typeorm';
 @Module({
   controllers: [CardsController],
   providers: [

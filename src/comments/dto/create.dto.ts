@@ -1,7 +1,9 @@
+import { ApiProperty } from "@nestjs/swagger";
 import { Type } from "class-transformer";
 import { IsDefined, IsInt, IsNotEmpty, IsString } from "class-validator";
 
-export class CreateDto {
+export class CommentCreateDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsDefined()
   @IsString()

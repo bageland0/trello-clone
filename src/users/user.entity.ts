@@ -1,20 +1,32 @@
-import { Column as ColumnEntity } from "src/columns/column.entity";
-import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ApiProperty } from '@nestjs/swagger';
+import { Column as ColumnEntity } from 'src/columns/column.entity';
+import {
+    Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity({name: 'users'})
+@Entity({ name: 'users' })
 export class User {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @ApiProperty()
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    name: string;
+  @ApiProperty()
+  @Column()
+  name: string;
 
-    @Column()
-    email: string;
+  @ApiProperty()
+  @Column()
+  email: string;
 
-    @Column()
-    password: string;
+  @ApiProperty()
+  @Column()
+  password: string;
 
-    @OneToMany(type => ColumnEntity, column => column.user)
-    columns: ColumnEntity[];
+  @ApiProperty({ type: () => ColumnEntity })
+  @OneToMany((type) => ColumnEntity, (column) => column.user)
+  columns: ColumnEntity[];
 }

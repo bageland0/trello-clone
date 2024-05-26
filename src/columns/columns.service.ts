@@ -2,11 +2,11 @@ import { Inject, Injectable, NotFoundException, Request } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Column } from './column.entity';
-import { CreateDto } from './dto/create.dto';
-import { UpdateDto } from './dto/update.dto';
 import { plainToClass } from 'class-transformer';
 import { ColumnRepository } from './column.repository';
 import { OwnershipInterface } from 'src/auth/ownership.interface';
+import { ColumnCreateDto } from './dto/create.dto';
+import { ColumnUpdateDto } from './dto/update.dto';
 
 @Injectable()
 export class ColumnsService {
@@ -15,9 +15,7 @@ export class ColumnsService {
     private repository: Repository<Column> & OwnershipInterface,
   ) {}
 
-  async create(dto: CreateDto, request: Request): Promise<Column> {
-    console.log(dto);
-
+  async create(dto: ColumnCreateDto, request: Request): Promise<Column> {
     const model = new Column();
     model.name = dto.name;
     model.user = request['user'];
@@ -33,7 +31,7 @@ export class ColumnsService {
     return await this.repository.findOneBy({ id });
   }
 
-  async update(id: number, dto: UpdateDto): Promise<Column> {
+  async update(id: number, dto: ColumnUpdateDto): Promise<Column> {
     const model = await this.repository.findOneBy({ id });
     if (!model) {
       throw new NotFoundException();

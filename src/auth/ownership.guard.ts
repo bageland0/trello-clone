@@ -34,7 +34,6 @@ export abstract class AbstractOwnershipGuard implements CanActivate {
     if (request.method === 'GET' || request.method === 'PATCH' || request.method === "DELETE") {
       const owner = await this.repository.getOwner(params.id);
 
-      console.log(owner.id, user.id, owner.id === user.id);
       if (owner.id === user.id) {
         return true;
       } else {
@@ -44,7 +43,6 @@ export abstract class AbstractOwnershipGuard implements CanActivate {
 
     const owner = await this.repository.getParent(body);
 
-    console.log(owner, owner.userId, user.id, owner.userId === user.id);
     if (owner.userId === user.id) {
       return true;
     } else {

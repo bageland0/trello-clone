@@ -22,7 +22,6 @@ export const CardRepository = (
       return model.column.user;
     },
     async getParent(params: any): Promise<Column> {
-      console.log(params);
       const model = await columnRepository.findOne({
         where: { id: params.columnId },
       });
@@ -43,9 +42,6 @@ export const CardRepository = (
       return models;
     },
   });
-  //extendedRepository.getOwner(1).then((user)=> {
-  //  console.log(user);
-  //});
 
   return extendedRepository;
 };

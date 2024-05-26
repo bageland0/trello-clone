@@ -2,12 +2,12 @@ import { Inject, Injectable, NotFoundException, Req } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository } from 'typeorm';
 import { Card } from './card.entity';
-import { CreateDto } from './dto/create.dto';
-import { UpdateDto } from './dto/update.dto';
 import { plainToClass } from 'class-transformer';
 import { CardRepository } from './card.repository';
 import { OwnershipInterface } from 'src/auth/ownership.interface';
 import { Column } from 'src/columns/column.entity';
+import { CardCreateDto } from './dto/create.dto';
+import { CardUpdateDto } from './dto/update.dto';
 
 @Injectable()
 export class CardsService {
@@ -16,9 +16,7 @@ export class CardsService {
     private repository: Repository<Card> & OwnershipInterface,
   ) {}
 
-  async create(dto: CreateDto): Promise<Card> {
-    console.log(dto)
-
+  async create(dto: CardCreateDto): Promise<Card> {
     const model = new Card();
     model.name = dto.name; model.columnId = dto.columnId;
 
@@ -33,7 +31,7 @@ export class CardsService {
     return await this.repository.findOneBy({ id });
   }
 
-  async update(id: number, dto: UpdateDto): Promise<Card> {
+  async update(id: number, dto: CardUpdateDto): Promise<Card> {
     const model = await this.repository.findOneBy({ id });
     if (!model) {
       throw new NotFoundException();
