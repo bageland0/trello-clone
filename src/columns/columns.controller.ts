@@ -15,7 +15,6 @@ import {
 } from '@nestjs/common';
 import { ColumnsService } from './columns.service';
 import { AuthGuard } from 'src/auth/auth.guard';
-import { Column } from './column.entity';
 import { ColumnUpdateDto } from './dto/update.dto';
 import { OwnershipGuard } from './ownership.guard';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
@@ -23,7 +22,7 @@ import { ColumnCreateDto } from './dto/create.dto';
 
 @ApiTags('columns')
 @ApiBearerAuth()
-@UseGuards(AuthGuard, OwnershipGuard)
+@UseGuards(AuthGuard)
 @Controller('columns')
 export class ColumnsController {
   constructor(private readonly service: ColumnsService) {}
@@ -37,6 +36,7 @@ export class ColumnsController {
   }
 
   @ApiOperation({ summary: 'Find all columns' })
+  @UseGuards(OwnershipGuard)
   @Get()
   async findAll(@Req() request) {
     const userId = request.user.id;
@@ -45,6 +45,7 @@ export class ColumnsController {
 
   @ApiOperation({ summary: 'Find column' })
   @ApiParam({ name: 'id', required: true, type: Number })
+  @UseGuards(OwnershipGuard)
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: string) {
     return await this.service.findOne(+id);
@@ -53,6 +54,7 @@ export class ColumnsController {
   @ApiOperation({ summary: 'Update column' })
   @ApiBody({ type: ColumnUpdateDto })
   @ApiParam({ name: 'id', required: true, type: Number })
+  @UseGuards(OwnershipGuard)
   @Patch(':id')
   async update(
     @Param('id', ParseIntPipe) id: string,
@@ -63,6 +65,7 @@ export class ColumnsController {
 
   @ApiOperation({ summary: 'Delete column' })
   @ApiParam({ name: 'id', required: true, type: Number })
+  @UseGuards(OwnershipGuard)
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: string) {
     return await this.service.delete(+id);

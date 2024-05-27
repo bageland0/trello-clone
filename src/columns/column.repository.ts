@@ -20,6 +20,7 @@ export const ColumnRepository = (
       return model.user;
     },
     async getParent(params: any): Promise<Column> {
+
       const model = await this.findOne({
         where: { id: params.columnId },
       });
