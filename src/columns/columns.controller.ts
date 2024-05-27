@@ -17,7 +17,7 @@ import { ColumnsService } from './columns.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ColumnUpdateDto } from './dto/update.dto';
 import { OwnershipGuard } from './ownership.guard';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiFoundResponse, ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiFoundResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ColumnCreateDto } from './dto/create.dto';
 
 @ApiTags('columns')
@@ -52,6 +52,7 @@ export class ColumnsController {
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiNotFoundResponse({ description: 'Not found'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @UseGuards(OwnershipGuard)
   @Get(':id')
@@ -63,6 +64,7 @@ export class ColumnsController {
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiNotFoundResponse({ description: 'Not found'})
   @ApiBody({ type: ColumnUpdateDto })
   @ApiParam({ name: 'id', required: true, type: Number })
   @UseGuards(OwnershipGuard)
@@ -78,9 +80,11 @@ export class ColumnsController {
   @ApiNoContentResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiNotFoundResponse({ description: 'Not found'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @UseGuards(OwnershipGuard)
   @Delete(':id')
+  @HttpCode(204)
   async delete(@Param('id', ParseIntPipe) id: string) {
     return await this.service.delete(+id);
   }

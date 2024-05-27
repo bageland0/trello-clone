@@ -17,7 +17,7 @@ import { CardsService } from './cards.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Card } from './card.entity';
 import { OwnershipGuard } from './ownership.guard';
-import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNoContentResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { CardCreateDto } from './dto/create.dto';
 import { CardUpdateDto } from './dto/update.dto';
 
@@ -33,6 +33,7 @@ export class CardsController {
   @ApiCreatedResponse({ description: 'Card has been successfully created'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiNotFoundResponse({ description: 'Column not found'})
   @Post()
   @HttpCode(201)
   async create(@Body() dto: CardCreateDto) {
@@ -52,6 +53,7 @@ export class CardsController {
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiNotFoundResponse({ description: 'Not found'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: string) {
@@ -62,6 +64,7 @@ export class CardsController {
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiNotFoundResponse({ description: 'Not found'})
   @ApiBody({ type: CardUpdateDto })
   @ApiParam({ name: 'id', required: true, type: Number })
   @Patch(':id')
@@ -76,8 +79,10 @@ export class CardsController {
   @ApiNoContentResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiNotFoundResponse({ description: 'Not found'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @Delete(':id')
+  @HttpCode(204)
   async delete(@Param('id', ParseIntPipe) id: string) {
     return await this.service.delete(+id);
   }

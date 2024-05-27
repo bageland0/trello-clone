@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
   Post,
   Request,
   UseGuards,
@@ -23,6 +24,7 @@ export class AuthController {
   @ApiOkResponse()
   @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiBody({ type: LoginDto })
+  @HttpCode(200)
   signIn(@Body() signInDto: LoginDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);
   }
