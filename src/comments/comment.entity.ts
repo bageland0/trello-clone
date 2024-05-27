@@ -5,7 +5,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -28,9 +27,4 @@ export class Comment {
   @JoinColumn()
   card: Card;
 
-  //const card = await getRepository(Card).findOne(1, {
-  //  relations: ['column', 'column.user'],
-  //});
-  //
-  //const user = card.column.user;
 }

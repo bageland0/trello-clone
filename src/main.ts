@@ -10,6 +10,11 @@ async function bootstrap() {
     .setTitle('Trello-clone API')
     .setDescription('Trello-clone API')
     .setVersion('1.0')
+    .addSecurity('bearer', {
+      type: 'http',
+      scheme: 'bearer',
+      bearerFormat: 'JWT',
+    })
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
@@ -21,6 +26,7 @@ async function bootstrap() {
       transformOptions: {
         exposeUnsetFields: false,
       },
+      transform: true,
     }),
   );
   await app.listen(3000);

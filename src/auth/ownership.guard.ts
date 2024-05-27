@@ -1,6 +1,7 @@
 import {
   CanActivate,
   ExecutionContext,
+  ForbiddenException,
   Inject,
   Injectable,
   NotFoundException,
@@ -41,7 +42,7 @@ export abstract class AbstractOwnershipGuard implements CanActivate {
       if (owner.id === user.id) {
         return true;
       } else {
-        throw new NotFoundException();
+        throw new ForbiddenException();
       }
     }
 
@@ -50,7 +51,7 @@ export abstract class AbstractOwnershipGuard implements CanActivate {
     if (owner.userId === user.id) {
       return true;
     } else {
-      throw new NotFoundException();
+      throw new ForbiddenException();
     }
   }
 }

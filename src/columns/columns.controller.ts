@@ -17,7 +17,7 @@ import { ColumnsService } from './columns.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { ColumnUpdateDto } from './dto/update.dto';
 import { OwnershipGuard } from './ownership.guard';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiFoundResponse, ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { ColumnCreateDto } from './dto/create.dto';
 
 @ApiTags('columns')
@@ -29,6 +29,9 @@ export class ColumnsController {
 
   @ApiOperation({ summary: 'Create column' })
   @ApiBody({ type: ColumnCreateDto })
+  @ApiCreatedResponse({ description: 'Column has been successfully created'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @Post()
   @HttpCode(201)
   async create(@Body() dto: ColumnCreateDto, @Request() request: Request) {
@@ -36,6 +39,8 @@ export class ColumnsController {
   }
 
   @ApiOperation({ summary: 'Find all columns' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @UseGuards(OwnershipGuard)
   @Get()
   async findAll(@Req() request) {
@@ -44,6 +49,9 @@ export class ColumnsController {
   }
 
   @ApiOperation({ summary: 'Find column' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @UseGuards(OwnershipGuard)
   @Get(':id')
@@ -52,6 +60,9 @@ export class ColumnsController {
   }
 
   @ApiOperation({ summary: 'Update column' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiBody({ type: ColumnUpdateDto })
   @ApiParam({ name: 'id', required: true, type: Number })
   @UseGuards(OwnershipGuard)
@@ -64,6 +75,9 @@ export class ColumnsController {
   }
 
   @ApiOperation({ summary: 'Delete column' })
+  @ApiNoContentResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @UseGuards(OwnershipGuard)
   @Delete(':id')

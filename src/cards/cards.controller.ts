@@ -17,7 +17,7 @@ import { CardsService } from './cards.service';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { Card } from './card.entity';
 import { OwnershipGuard } from './ownership.guard';
-import { ApiBearerAuth, ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiCreatedResponse, ApiForbiddenResponse, ApiNoContentResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 import { CardCreateDto } from './dto/create.dto';
 import { CardUpdateDto } from './dto/update.dto';
 
@@ -30,6 +30,9 @@ export class CardsController {
 
   @ApiOperation({ summary: 'Create card' })
   @ApiBody({ type: CardCreateDto })
+  @ApiCreatedResponse({ description: 'Card has been successfully created'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @Post()
   @HttpCode(201)
   async create(@Body() dto: CardCreateDto) {
@@ -37,6 +40,8 @@ export class CardsController {
   }
 
   @ApiOperation({ summary: 'Find all cards' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @Get()
   async findAll(@Req() request) {
     const userId = request.user.id;
@@ -44,6 +49,9 @@ export class CardsController {
   }
 
   @ApiOperation({ summary: 'Find card' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @Get(':id')
   async findOne(@Param('id', ParseIntPipe) id: string) {
@@ -51,6 +59,9 @@ export class CardsController {
   }
 
   @ApiOperation({ summary: 'Update card' })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiBody({ type: CardUpdateDto })
   @ApiParam({ name: 'id', required: true, type: Number })
   @Patch(':id')
@@ -62,6 +73,9 @@ export class CardsController {
   }
 
   @ApiOperation({ summary: 'Delete card' })
+  @ApiNoContentResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
+  @ApiForbiddenResponse({ description: 'Forbidden'})
   @ApiParam({ name: 'id', required: true, type: Number })
   @Delete(':id')
   async delete(@Param('id', ParseIntPipe) id: string) {

@@ -9,7 +9,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { LoginDto } from './dto/login.dto';
-import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBody, ApiOkResponse, ApiOperation, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger';
 
 @ApiTags('auth')
 @Controller('auth')
@@ -20,6 +20,8 @@ export class AuthController {
   @ApiOperation({
     summary: 'Login user with email and password to get JWT-token',
   })
+  @ApiOkResponse()
+  @ApiUnauthorizedResponse({ description: 'Unauthorized'})
   @ApiBody({ type: LoginDto })
   signIn(@Body() signInDto: LoginDto) {
     return this.authService.signIn(signInDto.email, signInDto.password);

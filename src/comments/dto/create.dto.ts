@@ -9,6 +9,7 @@ export class CommentCreateDto {
   @IsString()
   text: string;
 
+  @ApiProperty()
   @IsDefined()
   @IsNotEmpty()
   @Type(() => Number)
